@@ -163,14 +163,14 @@ const getSingleBook = async (
 ) => {
   const bookId = req.params.bookId;
   try {
-    const book = await bookModel
-      .findOne({ _id: bookId })
-      .populate('name', 'author');
+    const book = await bookModel.findOne({ _id: bookId }).populate('author');
     if (!book) {
       return next(createHttpError(404, 'Book not found.'));
     }
+
     return res.json(book);
   } catch (error) {
+    console.log(error);
     next(createHttpError(500, 'Error while getting book'));
   }
 };
