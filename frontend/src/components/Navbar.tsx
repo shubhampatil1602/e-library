@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <nav className='shadow py-4'>
+    <nav className='shadow py-4 mb-6'>
       <div className='lg:max-w-5xl w-[90%] mx-auto flex items-center justify-between'>
         <Link
           href={'/'}
