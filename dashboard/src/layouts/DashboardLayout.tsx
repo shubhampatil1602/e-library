@@ -8,7 +8,7 @@ import {
   Package2,
   Search,
 } from 'lucide-react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Navigate, Outlet } from 'react-router-dom';
 
 import {
   Card,
@@ -27,8 +27,18 @@ import {
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu';
 import { Input } from '../components/ui/input';
+import useTokenStore from '../store';
 
 const DashboardLayout = () => {
+  const { token, setToken } = useTokenStore((state) => state);
+
+  if (!token) {
+    return <Navigate to={'/auth/login'} replace />;
+  }
+
+  const logout = () => {
+    setToken('');
+  };
   return (
     <div className='grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
       <div className='hidden border-r bg-muted/40 md:block'>
@@ -118,22 +128,6 @@ const DashboardLayout = () => {
                   Books
                 </Link>
               </nav>
-              <div className='mt-auto'>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size='sm' className='w-full'>
-                      Upgrade
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
             </SheetContent>
           </Sheet>
           <div className='w-full flex-1'>
@@ -161,7 +155,11 @@ const DashboardLayout = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <span className='cursor-pointer' onClick={logout}>
+                  Logout
+                </span>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

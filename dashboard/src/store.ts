@@ -1,14 +1,23 @@
 import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 
 export interface TokenStore {
   token: string;
   setToken: (data: string) => void;
 }
 
-const useTokenStore = create<TokenStore>((set) => ({
-  token: '',
-  // @ts-ignore
-  setToken: () => set((state, data: string) => ({ token: data })),
-}));
+const useTokenStore = create<TokenStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        token: '',
+        setToken: (data: string) => set(() => ({ token: data })),
+      }),
+      {
+        name: 'token-store',
+      }
+    )
+  )
+);
 
 export default useTokenStore;
