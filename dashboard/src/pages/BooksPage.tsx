@@ -52,7 +52,7 @@ const BooksPage = () => {
     queryFn: getBooks,
     staleTime: 10000,
   });
-  console.log(data);
+
   return (
     <div>
       <div>
@@ -93,9 +93,12 @@ const BooksPage = () => {
 
             <Button size='sm' className='h-8 gap-1'>
               <PlusCircle className='h-3.5 w-3.5' />
-              <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
+              <Link
+                to={'/dashboard/books/create'}
+                className='sr-only sm:not-sr-only sm:whitespace-nowrap'
+              >
                 Add Book
-              </span>
+              </Link>
             </Button>
           </div>
         </div>
@@ -114,7 +117,7 @@ const BooksPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
+                    <TableHead className='hidden w-[75px] sm:table-cell'>
                       <span className='sr-only'>Image</span>
                     </TableHead>
                     <TableHead>Title</TableHead>
